@@ -90,7 +90,7 @@ ShowDetails.getInitialProps = async (ctx) => {
     try {
         console.log(ctx.query.showId)
         const showId = ctx.query.showId
-        const response = await axios.get(`${process.env.TVSHOWS_API}/shows/${showId}?embed=cast`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_TVSHOWS_API}/shows/${showId}?embed=cast`)
 
         console.log(response)
         console.log(response.message)

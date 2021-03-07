@@ -36,7 +36,7 @@ Country.getInitialProps = async (ctx) => { // Important!!!!. Note that getInitia
     try {
         console.log(ctx.query.country)
         const country = ctx.query.country || 'us'
-        const response = await axios.get(`${process.env.TVSHOWS_API}/schedule?country=${country}&date=2014-12-01`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_TVSHOWS_API}/schedule?country=${country}&date=2014-12-01`)
 
         return {
             shows: response.data,
