@@ -1,7 +1,20 @@
+import { Fragment } from 'react'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
+import 'bulma/css/bulma.min.css'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const MainApp = ({ Component, pageProps }) => {
+  return (
+    <Fragment>
+      <Navbar />
+      <main>
+        <Component {...pageProps} />
+      </main>
+      <Footer />
+    </Fragment>
+  )
 }
 
-export default MyApp
+export default MainApp

@@ -1,0 +1,14 @@
+<div className="navbar-item">
+                <div className="control has-icons-left">
+                    <div className="select is-medium">
+                        <select onChange={handleChange } defaultValue={ selectedCountry }>
+                            {
+                                countries.map(({ value, name }, index) => {
+                                    return <option key={ index } value={ value }>{ name }</option>
+                                })
+                            } 
+                        </select> 
+                    </div> 
+                    <span className="icon is-medium is-left"><i className="fas fa-globe"> </i></span>
+                </div>
+            </div>
