@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Link from 'next/link'
+import cookies from 'nookies'
 import { useRouter } from 'next/router'
 
 const countries = [
@@ -11,6 +11,13 @@ const Navbar = () => {
     const router = useRouter()
     const country = router.query.country
     const [selectedCountry, setSelectedCountry] = useState(country)
+
+    useEffect(() => {
+      cookies.set(null, 'defaultCountry', selectedCountry, {
+        maxAge: 60 * 60 * 24, // 1 day
+        path: '/'
+      })
+    }, [selectedCountry])
 
     const handleChange = (e) => {
         const { value } = e.target
@@ -38,13 +45,9 @@ const Navbar = () => {
     
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a className="navbar-item">
-            Home
-          </a>
+          <a className="navbar-item">Home</a>
     
-          <a className="navbar-item">
-            Documentation
-          </a>
+          <a className="navbar-item">Documentation</a>
     
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">
