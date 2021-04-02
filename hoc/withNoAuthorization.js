@@ -5,16 +5,16 @@ import Router from 'next/router'
 const authenticate = (context) => {
     const { token } = cookies.get(context)
 
-    // If on server-side(i.e context.req is present) and no token
-    if(context.req && !token) { // Check if cookie is present
-        context.res.writeHead(302, { Location: '/signin'})
+    // If on server-side(i.e context.req is present) and token
+    if(context.req && token) { // Check if cookie is present
+        context.res.writeHead(302, { Location: '/'})
         context.res.end()
         return
     }
 
     // If on client-side and no token
-    if(!token) {
-        Router.push('/signin')
+    if(token) {
+        Router.push('/')
     }
 
     return token
@@ -25,7 +25,7 @@ const isAuthenticated = context => {
     return token
 }
 
-const withAuthorization = (WrappedComponent) => {
+const withNoAuthorization = (WrappedComponent) => {
     const hocComponent = (props) => {
         console.log(props)
         return <WrappedComponent {...props} />
@@ -48,4 +48,4 @@ const withAuthorization = (WrappedComponent) => {
     return hocComponent
 }
 
-export { withAuthorization, isAuthenticated }
+export { withNoAuthorization, isAuthenticated }

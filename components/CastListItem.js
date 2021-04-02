@@ -4,9 +4,9 @@ const CastListItem = ({ person }) => {
     console.log(person)
     const { image } = person
     return (
-        <div class="card">
-            <div class="card-image">
-                <figure class="image is-96x96">
+        <div className="card">
+            <div className="card-image">
+                <figure className="image is-96x96">
                 {
                     image 
                     ? <img src={image.medium} alt="Placeholder image" /> 

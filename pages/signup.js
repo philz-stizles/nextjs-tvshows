@@ -4,14 +4,15 @@ import axios from 'axios'
 import cookies from 'nookies'
 import { useRouter } from 'next/router'
 import { exists, isEmail } from '../utils/validators'
-import { withNoAuthorization } from '../hoc/withNoAuthorization'
+import CustomInput from '../components/CustomInput'
 
-const SignIn = () => {
+const SignUp = () => {
     const [formState, setFormstate] = useState({
+        name: { value: '', error: '' },
         email: { value: '', error: '' },
         password: { value: '', error: '' }
     })
-    const { email, password} = formState
+    const { name, email, password } = formState
 
 
     const [loading, setLoading] = useState(false)
@@ -33,24 +34,20 @@ const SignIn = () => {
     const handleSubmit = async e => {
         e.preventDefault()
 
-        if(!exists(email.value) || !exists(password.value)) {
+        if(!exists(name.value) || !exists(email.value) || !exists(password.value)) {
             setError('Please enter required credentials')
             return 
         }
 
         try {
             setLoading(true)
-
+            console.log(formState)
             // const response = await axios.post(`${process.env.NEXT_PUBLIC_AUTH_API}/auth/signin`, { ...formState })
-            const response = await axios.post(`/api/auth/signin`, { email: email.value, password: password.value })
+            const response = await axios.post(`/api/auth/signup`, { name: name.value, email: email.value, password: password.value })
             console.log(response)
             setLoading(false)
-            cookies.set(null, 'token', response.data.token, {
-                maxAge: 60 * 60 * 24, // 1 day
-                path: '/'
-            })
 
-            Router.replace('/country/[country]', '/country/us')
+            Router.push('/signin')
 
         } catch (error) {
             console.log(error)
@@ -92,6 +89,11 @@ const SignIn = () => {
                 <div className="columns">
                     <div className="column is-half is-offset-one-quarter">
                         <form className="my-6 py-6" onSubmit={handleSubmit}>
+                            <CustomInput label="Name" name="name" value={name.value} placeholder="example@somemail.com"
+                                onChange={handleInputChange} onBlur={handleValidateEmail} 
+                                error={name.error}/>
+                            
+
                             <div className="field">
                                 <label className="label">Email</label>
                                 <div className="control has-icons-left has-icons-right">
@@ -127,7 +129,7 @@ const SignIn = () => {
 
                             <div className="field">
                                 <div className="control">
-                                    <p>Dont have an account?, <Link href="/signup"><a>signup</a></Link></p>
+                                  <p>Already have an account, <Link href="/signin"><a>sign in</a></Link></p>
                                 </div>
                             </div>
                     
@@ -148,4 +150,4 @@ const SignIn = () => {
     )
 }
 
-export default withNoAuthorization(SignIn)
+export default SignUp
