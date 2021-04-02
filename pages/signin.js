@@ -42,7 +42,7 @@ const SignIn = () => {
             setLoading(true)
 
             // const response = await axios.post(`${process.env.NEXT_PUBLIC_AUTH_API}/auth/signin`, { ...formState })
-            const response = await axios.post(`/api/auth/signin`, { ...formState })
+            const response = await axios.post(`/api/auth/signin`, { email: email.value, password: password.value })
             console.log(response)
             setLoading(false)
             cookies.set(null, 'token', response.data.token, {
