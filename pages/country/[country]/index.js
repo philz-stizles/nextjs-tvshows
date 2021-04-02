@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookies from 'nookies'
 import ShowListItem from '../../../components/ShowListItem'
 import Error from 'next/error'
 
@@ -14,7 +15,7 @@ const Country = ({shows, country, statusCode, message}) => {
 
     if(shows) {
         return (
-            <section className="mt-6">
+            <section className="my-6">
                 <div className="container">
                     <div className="columns is-multiline">
                         { renderShows(shows) }
@@ -34,8 +35,12 @@ const Country = ({shows, country, statusCode, message}) => {
 // You must make sure that whatever you do inside getInitialProps are Server-side compatible
 Country.getInitialProps = async (ctx) => { // Important!!!!. Note that getInitialProps can only be used for page components
     try {
-        console.log(ctx.query.country)
-        const country = ctx.query.country || 'us'
+        console.log('country query',  ctx.query)
+        console.log( 'country browser', process.browser)
+        const { defaultCountry } = cookies.get(ctx)
+        console.log('country cookie', defaultCountry)
+        const country = ctx.query.country || defaultCountry || 'us'
+        console.log('country country', country)
         const response = await axios.get(`${process.env.NEXT_PUBLIC_TVSHOWS_API}/schedule?country=${country}&date=2014-12-01`)
 
         return {
